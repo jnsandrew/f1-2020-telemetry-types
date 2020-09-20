@@ -1,0 +1,124 @@
+import { GameHeader } from './GameHeader';
+
+export type EventStringCode =
+    | 'SSTA'
+    | 'SEND'
+    | 'FTLP'
+    | 'RTMT'
+    | 'DRSE'
+    | 'DRSD'
+    | 'TMPT'
+    | 'CHQF'
+    | 'RCWN'
+    | 'PENA'
+    | 'SPTP';
+
+export enum PENALTY_TYPE {
+    DRIVE_THROUGH = 0,
+    STOP_GO = 1,
+    GRID_PENALTY = 2,
+    PENALTY_REMINDER = 3,
+    TIME_PENALTY = 4,
+    WARNING = 5,
+    DISQUALIFIED = 6,
+    REMOVED_FROM_FORMATION_LAP = 7,
+    PARKED_TOO_LONG = 8,
+    TYRE_REGULATIONS = 9,
+    THIS_LAP_INVALIDATED = 10,
+    THIS_AND_NEXT_LAP_INVALIDATED = 11,
+    THIS_LAP_INVALIDATED_NO_REASON = 12,
+    THIS_AND_NEXT_LAP_INVALIDATED_NO_REASON = 13,
+    THIS_AND_PREVIOUS_LAP_INVALIDATED = 14,
+    THIS_AND_PREVIOUS_LAP_INVALIDATED_NO_REASON = 15,
+    RETIRED = 16,
+    BLACK_FLAG = 17,
+}
+
+export enum INFRINGEMENT_TYPE {
+    BLOCKING_BY_SLOW_DRIVING = 0,
+    BLOCKING_BY_WRONG_WAY_DRIVING = 1,
+    REVERSING_OFF_THE_START_LINE = 2,
+    BIG_COLLISION = 3,
+    SMALL_COLLISION = 4,
+    COLLISION_FAILED_TO_HAND_BACK_POSITION_SINGLE = 5,
+    COLLISION_FAILED_TO_HAND_BACK_POSITION_MULTIPLE = 6,
+    CORNER_CUTTING_GAINED_TIME = 7,
+    CORNER_CUTTING_OVERTAKE_SINGLE = 8,
+    CORNER_CUTTING_OVERTAKE_MULTIPLE = 9,
+    CROSSED_PIT_EXIT = 10,
+    IGNORING_BLUE_FLAGS = 11,
+    IGNORING_YELLOW_FLAGS = 12,
+    IGNORING_DRIVE_THROUGH = 13,
+    TOO_MANY_DRIVE_THROUGHS = 14,
+    DRIVE_THROUGH_REMINDER_SERVE_WITHIN = 15,
+    DRIVE_THROUGH_REMINDER_SERVE_THIS_LAP = 16,
+    PIT_LANE_SPEEDING = 17,
+    PARKED_TOO_LONG = 18,
+    IGNORING_TYRE_REGULATIONS = 19,
+    TOO_MANY_PENALTIES = 20,
+    MULTIPLE_WARNINGS = 21,
+    APPROACHING_DISQUALIFICATION = 22,
+    TYRE_REGULATIONS_SELECT_SINGLE = 23,
+    TYRE_REGULATIONS_SELECT_MULTIPLE = 24,
+    LAP_INVALIDATED_CORNER_CUTTING = 25,
+    LAP_INVALIDATED_RUNNING_WIDE = 26,
+    CORNER_CUTTING_RAN_WIDE_GAINED_TIME = 27,
+    CORNER_CUTTING_RAN_WIDE_GAINED_TIME_SIGNIFICANT = 28,
+    CORNER_CUTTING_RAN_WIDE_GAINED_TIME_EXTREME = 29,
+    LAP_INVALIDATED_WALL_RIDING = 30,
+    LAP_INVALIDATED_FLASHBACK_USED = 31,
+    LAP_INVALIDATED_RESET_TO_TRACK = 32,
+    BLOCKING_THE_PITLANE = 33,
+    JUMP_START = 34,
+    SAFETY_CAR_TO_CAR_COLLISION = 35,
+    SAFETY_CAR_ILLEGAL_OVERTAKE = 36,
+    SAFETY_CAR_EXCEEDING_PACE = 37,
+    VIRTUAL_SAFETY_CAR_EXCEEDING_PACE = 38,
+    FORMATION_LAP_BELOW_ALLOWED_SPEED = 39,
+    RETIRED_MECHANICAL_FAILURE = 40,
+    RETIRED_TERMINALLY_DAMAGED = 41,
+    SAFETY_CAR_TOO_FAR_BACK = 42,
+    BLACK_FLAG = 43,
+    UNSERVED_STOP_GO = 44,
+    UNSERVED_DRIVE_THROUGH = 45,
+    ENGINE_COMPONENT_CHANGE = 46,
+    GEARBOX_CHANGE = 47,
+    LEAGUE_GRID_PENALTY = 48,
+    RETRY_PENALTY = 49,
+    ILLEGAL_TIME_GAIN = 50,
+    MANDATORY_PITSTOP = 51,
+}
+
+export interface FastestLap {
+    vehicleIdx: number;
+    lapTime: number;
+}
+
+export interface Retirement {
+    vehicleIdx: number;
+}
+
+export interface TeammateInPits {
+    vehicleIdx: number;
+}
+
+export interface RaceWinner {
+    vehicleIdx: number;
+}
+
+export interface Penalty {
+    penaltyType: PENALTY_TYPE;
+    infringementType: INFRINGEMENT_TYPE;
+    vehicleIdx: number;
+    otherVehicleIdx: number;
+    time: number;
+    lapNum: number;
+    placesGained: number;
+}
+
+export interface EventData {
+    m_eventStringCode: EventStringCode[];
+    m_eventDetails: RaceWinner | FastestLap | Retirement | TeammateInPits;
+}
+
+export interface PacketEventData extends GameHeader, EventData {}
